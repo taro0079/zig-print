@@ -1,5 +1,7 @@
 const std = @import("std");
 const print = std.debug.print;
+const os = std.os;
+const assert = std.debug.assert;
 
 pub fn main() void {
     // integer
@@ -22,7 +24,7 @@ pub fn main() void {
     assert(optional_value == null);
 
     print("\noptional 1\ntype: {s}\nvalue: {s}\n", .{
-        @typeName(@Typeof(optional_value)),
+        @typeName(@TypeOf(optional_value)),
         optional_value,
     });
 
@@ -32,5 +34,20 @@ pub fn main() void {
     print("\noptional 2\ntype: {s}\nvalue: {s}\n", .{
         @typeName(@TypeOf(optional_value)),
         optional_value,
+    });
+
+    // error union
+    var number_or_error: anyerror!i32 = error.ArgNotFound;
+
+    print("\nerror union 1\ntype: {s}\nvalue: {}\n", .{
+        @typeName(@TypeOf(number_or_error)),
+        number_or_error,
+    });
+
+    number_or_error = 1234;
+
+    print("\nerror union 2\ntype: {s}\nvalue: {}\n", .{
+        @typeName(@TypeOf(number_or_error)),
+        number_or_error,
     });
 }
